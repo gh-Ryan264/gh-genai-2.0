@@ -1,0 +1,8 @@
+setup.py
+src/gh_navigation.egg-info/PKG-INFO
+src/gh_navigation.egg-info/SOURCES.txt
+src/gh_navigation.egg-info/dependency_links.txt
+src/gh_navigation.egg-info/top_level.txt
+tests/test_delete.py
+tests/test_ingest.py
+tests/test_upsert.py

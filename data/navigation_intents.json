@@ -1,0 +1,576 @@
+[
+    {
+        "intent": "navigate_to_login_page",
+        "description": "Directs the user to the login page to authenticate and access the application.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/login_page",
+            "android": "ActivityLogin"
+        }
+    },
+    {
+        "intent": "navigate_to_main_dashboard",
+        "description": "Navigates to the main dashboard, providing an overview of key application metrics and access points.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/main_dashboard",
+            "android": "MenuMainActivity"
+        }
+    },
+    {
+        "intent": "navigate_to_application_dashboard",
+        "description": "Takes the user to the application dashboard to view detailed application-specific data and controls.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/application_dashboard_view",
+            "android": "ActivityApplicationDashboard"
+        }
+    },
+    {
+        "intent": "navigate_to_tab_list",
+        "description": "Directs to the tab list page displaying worker or event information in a tabular format.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/tab_list_page",
+            "android": "ActivityTabList"
+        }
+    },
+    {
+        "intent": "navigate_to_worker_event_detail",
+        "description": "Navigates to a detailed view of a specific worker or event, including relevant metadata.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/page_layout_template",
+            "android": "ActivityWorkerEventDetail"
+        }
+    },
+    {
+        "intent": "navigate_to_resolve_event",
+        "description": "Takes the user to the event resolution page to take actions on specific events.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/events_action_bottom_bar",
+            "android": "ActivityResolveEvent"
+        }
+    },
+    {
+        "intent": "navigate_to_biometric_snapshot",
+        "description": "Directs to the biometric snapshot list page to view biometric data records.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/biometric_snapshot_list",
+            "android": "ActivityBiometricSnapshot"
+        }
+    },
+    {
+        "intent": "navigate_to_fleet_gas_readings",
+        "description": "Navigates to the fleet gas readings list to monitor gas-related data for fleet management.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/fleet_gas_readings_list",
+            "android": "ActivityFleetGasReadings"
+        }
+    },
+    {
+        "intent": "navigate_to_user_list",
+        "description": "Takes the user to the user list page to view and manage user profiles.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/user_list_page",
+            "android": "ActivityUserList"
+        }
+    },
+    {
+        "intent": "navigate_to_map_view",
+        "description": "Directs to the full-page map view to visualize geographical data and locations.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/full_page_map_view",
+            "android": "ActivityMapView"
+        }
+    },
+    {
+        "intent": "navigate_to_device_onboarding",
+        "description": "Navigates to the device onboarding view to register or configure new devices.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/device_onboarding_view",
+            "android": "ActivityDeviceOnboarding"
+        }
+    },
+    {
+        "intent": "navigate_to_device_model_vertical",
+        "description": "Takes the user to the device model vertical page to view device model details in a structured format.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/device_model_vertical_view",
+            "android": "ActivityDeviceModelVertical"
+        }
+    },
+    {
+        "intent": "navigate_to_device_model_detail",
+        "description": "Directs to the device model detail screen to view specific device model information.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/device_model_detail_view",
+            "android": "ActivityDeviceModelDetail"
+        }
+    },
+    {
+        "intent": "navigate_to_entity_listing",
+        "description": "Navigates to the user or product listing screen to browse entities.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/entity_listing_view",
+            "android": "ActivityEntityListing"
+        }
+    },
+    {
+        "intent": "navigate_to_entity_search",
+        "description": "Takes the user to the user or product search screen to find specific entities.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/entity_search_view",
+            "android": "ActivityEntitySearch"
+        }
+    },
+    {
+        "intent": "navigate_to_user_add",
+        "description": "Directs to the page for adding a new user to the system.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/user_add_view",
+            "android": "ActivityUserAdd"
+        }
+    },
+    {
+        "intent": "navigate_to_user_preview",
+        "description": "Navigates to the user preview page to review user details before saving.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/user_preview_view",
+            "android": "ActivityUserPreview"
+        }
+    },
+    {
+        "intent": "navigate_to_user_edit",
+        "description": "Takes the user to the user edit page to modify existing user information.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/user_edit_view",
+            "android": "ActivityUserEdit"
+        }
+    },
+    {
+        "intent": "navigate_to_product_add",
+        "description": "Directs to the product add view to register a new product in the system.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/product_add_view",
+            "android": "ActivityProductAdd"
+        }
+    },
+    {
+        "intent": "navigate_to_product_preview",
+        "description": "Navigates to the product preview view to review product details before saving.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/product_preview_view",
+            "android": "ActivityProductPreview"
+        }
+    },
+    {
+        "intent": "navigate_to_product_edit",
+        "description": "Takes the user to the product edit view to modify existing product information.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/product_edit_view",
+            "android": "ActivityProductEdit"
+        }
+    },
+    {
+        "intent": "navigate_to_entity_filter",
+        "description": "Directs to the user or product filter screen to refine search results.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/entity_filter_view",
+            "android": "ActivityEntityFilter"
+        }
+    },
+    {
+        "intent": "navigate_to_tasks_list",
+        "description": "Navigates to the issue screen to view a list of reported tasks or issues.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/tasks_list",
+            "android": "ActivityTasksList"
+        }
+    },
+    {
+        "intent": "navigate_to_task_preview",
+        "description": "Takes the user to the issue preview screen to view details of a specific task or issue.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/task_preview_screen",
+            "android": "ActivityTaskPreview"
+        }
+    },
+    {
+        "intent": "navigate_to_new_issue",
+        "description": "Directs to the issue add or edit screen to create or modify an issue.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/new_issue_screen",
+            "android": "ActivityNewIssue"
+        }
+    },
+    {
+        "intent": "navigate_to_task_filter",
+        "description": "Navigates to the issue filter view to refine the list of tasks or issues.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/task_filter_view",
+            "android": "ActivityTaskFilter"
+        }
+    },
+    {
+        "intent": "navigate_to_identifiers",
+        "description": "Takes the user to the identifiers screen to manage identifier data.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/identifiers",
+            "android": "ActivityIdentifiers"
+        }
+    },
+    {
+        "intent": "navigate_to_identifiers_complete",
+        "description": "Directs to the identifiers complete screen to confirm identifier updates.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/identifiers_update_complete_screen",
+            "android": "ActivityIdentifiersComplete"
+        }
+    },
+    {
+        "intent": "navigate_to_form_executions",
+        "description": "Navigates to the form executions listing view to select a form type for execution.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/form_executions_listing_view",
+            "android": "ActivityFormExecutions"
+        }
+    },
+    {
+        "intent": "navigate_to_questions_component",
+        "description": "Takes the user to the questions component screen for inspections like product, worker, or area.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/questions_component",
+            "android": "ActivityQuestionsComponent"
+        }
+    },
+    {
+        "intent": "navigate_to_worker_fit_test",
+        "description": "Directs to the worker fit test and training screen for worker-related assessments.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/worker_fit_test_view",
+            "android": "ActivityWorkerFitTest"
+        }
+    },
+    {
+        "intent": "navigate_to_question_inflater",
+        "description": "Navigates to the questions screen for dynamic question rendering during inspections.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/question_inflater",
+            "android": "ActivityQuestionInflater"
+        }
+    },
+    {
+        "intent": "navigate_to_checklist_complete",
+        "description": "Takes the user to the checklist complete screen to finalize checklist submissions.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/checklist_complete_screen",
+            "android": "ActivityChecklistComplete"
+        }
+    },
+    {
+        "intent": "navigate_to_commission_screen",
+        "description": "Directs to the commission screen to add items to inventory.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/commission_screen",
+            "android": "ActivityPPECommission"
+        }
+    },
+    {
+        "intent": "navigate_to_commission_complete",
+        "description": "Navigates to the commission complete screen to confirm inventory additions.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/commission_complete_screen",
+            "android": "ActivityCommissionComplete"
+        }
+    },
+    {
+        "intent": "navigate_to_assign_screen",
+        "description": "Takes the user to the assignment screen to manage assignments of products or workers.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/assign_screen",
+            "android": "ActivityAssign"
+        }
+    },
+    {
+        "intent": "navigate_to_assignment_component",
+        "description": "Directs to the assignment component for linking products to areas or workers.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/assignment_component",
+            "android": "ActivityAssignmentComponent"
+        }
+    },
+    {
+        "intent": "navigate_to_search_worker",
+        "description": "Navigates to the search worker screen for assigning workers to areas or products.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/search_worker_screen",
+            "android": "ActivitySearchWorker"
+        }
+    },
+    {
+        "intent": "navigate_to_assignment_complete",
+        "description": "Takes the user to the assignment complete screen to finalize assignments.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/assignment_complete_screen",
+            "android": "ActivityAssignmentComplete"
+        }
+    },
+    {
+        "intent": "navigate_to_quick_scan_summary",
+        "description": "Directs to the quick scan summary screen to view scan results on the mobile app.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/quick_scan_summary",
+            "android": "ActivityQuickScanSummary"
+        }
+    },
+    {
+        "intent": "navigate_to_form_listing",
+        "description": "Navigates to the form list screen to view available forms for execution.",
+        "parameters": {
+            "app_id": "integer"
+        },
+        "required": [
+            "app_id"
+        ],
+        "responses": {
+            "web": "https://qa.sim.guardhat.com/form_listing_view",
+            "android": "ActivityFormListing"
+        }
+    }
+]
