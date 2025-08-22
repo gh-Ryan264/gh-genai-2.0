@@ -5,9 +5,10 @@ from psycopg2.extras import execute_values, Json
 from sentence_transformers import SentenceTransformer
 from database.db import connect_db, close_db
 from rag.embedding_model import get_embedding_doc, get_embedding_query
-
+from database.db import db_logger
 def upsert_data(data):
     """Ingests data in bulk, upserting new intents and deleting missing ones."""
+    db_logger.info("Starting bulk data ingestion...............")
     conn = connect_db()
     if not conn:
         return
@@ -20,7 +21,7 @@ def upsert_data(data):
         # Get current vector_ids
         cur.execute("SELECT vector_id FROM intent;")
         existing_vector_ids = {str(row[0]) for row in cur.fetchall()}
-        print(f"Existing vector IDs fetched: {len(existing_vector_ids)} found.")
+        db_logger.info(f"Existing vector IDs fetched: {len(existing_vector_ids)} found.")
 
         intent_rows = []
         parameter_rows = []
@@ -56,7 +57,7 @@ def upsert_data(data):
             """,
             [(vid, emb) for vid, _, _, _, emb in intent_rows]
         )
-        print("Bulk upsert for intent_embedding completed.")
+        db_logger.info("Bulk upsert for intent_embedding completed.")
 
         # Upsert intent
         execute_values(
@@ -71,7 +72,7 @@ def upsert_data(data):
             """,
             [(vid, name, cat, desc) for vid, name, cat, desc, _ in intent_rows]
         )
-        print("Bulk upsert for intent table completed.")
+        db_logger.info("Bulk upsert for intent table completed.")
 
         # Upsert parameters
         execute_values(
@@ -84,7 +85,7 @@ def upsert_data(data):
             """,
             parameter_rows
         )
-        print("Bulk upsert for parameters completed.")
+        db_logger.info("Bulk upsert for parameters completed.")
 
         # Upsert responses
         execute_values(
@@ -99,10 +100,10 @@ def upsert_data(data):
             response_rows
         )
         conn.commit()
-        print("Bulk upsert for responses completed.")
+        db_logger.info("Bulk upsert for responses completed.")
     except Exception as e:
         conn.rollback()
-        print("Error during ingestion:", e)
-        print("Rolling back changes due to error.")
+        db_logger.error("Error during ingestion:", e)
+        db_logger.error("Rolling back changes due to error.")
     finally:
         close_db(conn, cur)

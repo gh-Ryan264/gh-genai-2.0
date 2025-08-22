@@ -3,22 +3,23 @@ import psycopg2
 from psycopg2.extras import execute_values, Json
 from database.db import connect_db, close_db
 from rag.embedding_model import get_embedding_doc, get_embedding_query
-
+from database.db import db_logger
 def ingest_data_bulk(data):
     """Ingests data in bulk, upserting new intents and deleting missing ones."""
+    db_logger.info("Starting bulk data ingestion...............")
     conn = connect_db()
     if not conn:
         return
 
     cur = conn.cursor()
     cur.execute("SET search_path TO gen_ai, public;")
-    print("Database schema set to gen_ai, public.")
+    db_logger.info("Database schema set to gen_ai, public.")
     
     try:
         # Get current vector_ids
         cur.execute("SELECT vector_id FROM intent;")
         existing_vector_ids = {str(row[0]) for row in cur.fetchall()}
-        print(f"Existing vector IDs fetched: {len(existing_vector_ids)} found.")
+        db_logger.debug(f"Existing vector IDs fetched: {len(existing_vector_ids)} found.")
 
         intent_rows = []
         parameter_rows = []
@@ -54,8 +55,7 @@ def ingest_data_bulk(data):
             """,
             [(vid, emb) for vid, _, _, _, emb in intent_rows]
         )
-        print("Bulk upsert for intent_embedding completed.")
-
+        db_logger.debug("Bulk upsert for intent_embedding completed.")
         # Upsert intent
         execute_values(
             cur,
@@ -69,7 +69,7 @@ def ingest_data_bulk(data):
             """,
             [(vid, name, cat, desc) for vid, name, cat, desc, _ in intent_rows]
         )
-        print("Bulk upsert for intent table completed.")
+        db_logger.info("Bulk upsert for intent table completed.")
 
         # Upsert parameters
         execute_values(
@@ -82,7 +82,7 @@ def ingest_data_bulk(data):
             """,
             parameter_rows
         )
-        print("Bulk upsert for parameters completed.")
+        db_logger.info("Bulk upsert for parameters completed.")
 
         # Upsert responses
         execute_values(
@@ -96,7 +96,7 @@ def ingest_data_bulk(data):
             """,
             response_rows
         )
-        print("Bulk upsert for responses completed.")
+        db_logger.info("Bulk upsert for responses completed.")
 
         # Manual delete for missing intents
         to_delete = existing_vector_ids - new_vector_ids
@@ -110,11 +110,11 @@ def ingest_data_bulk(data):
             print(f"Deleted {len(to_delete)} missing intents and their embeddings.")
 
         conn.commit()
-        print("Ingestion complete: upserts + deletes done.")
+        db_logger.info("Ingestion complete: upserts + deletes done.")
 
     except Exception as e:
         conn.rollback()
-        print("Error during ingestion:", e)
-        print("Rolling back changes due to error.")
+        db_logger.error("Error during ingestion:", e)
+        db_logger.error("Rolling back changes due to error.")
     finally:
         close_db(conn, cur)

@@ -10,8 +10,12 @@ from rag.retriever import get_top_k_documents, format_intents_plain_text
 from agent.prompts import classifier_prompt, generator_prompt
 from rag.embedding_model import get_embedding_query
 from llm.llms import invoke_llm
+import utility.config as config
+from utility.logging import get_logger
+import time
 
-TOP_K = 3
+# Initialize logger
+graph_logger = get_logger("graph", "agent_graph.log")
 load_dotenv()
 
 class AgentState(TypedDict):
@@ -21,32 +25,46 @@ class AgentState(TypedDict):
     answer: str
     query_embedding: list[float]
 
-
+graph_logger.info("intializing agent graph...")
 llm = ChatGroq(
     groq_api_key=os.environ.get("GROQ_API_KEY"),
     model_name="llama3-70b-8192",
     temperature=0,
 )
-
+graph_logger.info("llm initialized")
 
 
 # ---------- Handlers ----------
 
 
 def orchestrator(state: AgentState) -> AgentState:
+    start_time = time.time()
     prompt = classifier_prompt.format(query=state["query"])
+    graph_logger.debug(f"Classifying query: {state['query']}")# logging related
     text = invoke_llm(prompt)
+    llm_time = (time.time() - start_time) * 1000
+    graph_logger.debug(f"LLM response: {text}")# logging related
+    graph_logger.info(f"LLM classification took {llm_time:.2f} ms") # logging related
     state["category"] = extract_category(text)
+    graph_logger.debug(f"Identified category: {state['category']}")
     return state
 
 
 def navigation_handler(state: AgentState) -> AgentState:
+    start_time = time.time()
     query_embedding = get_embedding_query(state["query"])
-    state["query_embedding"] = query_embedding
-    top_documents = get_top_k_documents(query_embedding, TOP_K)
+    embedding_time = (time.time() - start_time) * 1000
+    graph_logger.debug(f"generated query embeddings for{state['query']}")# logging related
+    graph_logger.info(f"Generated query embedding in {embedding_time:.2f} ms")
 
+    state["query_embedding"] = query_embedding
+    graph_logger.info("retrieving top documents for navigation...") # logging related
+    top_documents = get_top_k_documents(query_embedding, k=config.TOP_K)
+    graph_logger.debug(f"Top documents retrieved: {len(top_documents)}")# logging related
+    
     if not top_documents:
         state["answer"] = "No relevant information found."
+        graph_logger.warning("No relevant documents found for navigation.") # logging related
         return state
 
     state["context"] = format_intents_plain_text(top_documents)
@@ -54,11 +72,15 @@ def navigation_handler(state: AgentState) -> AgentState:
         context=state["context"],
         query=state["query"]
     )
+    graph_logger.debug(f"Generating response for query: {state['query']}")# logging
     text = invoke_llm(prompt)
+    llm_time = (time.time() - start_time) * 1000
+    graph_logger.info(f"LLM response generated ... took {llm_time:.2f} ms") # logging related
     parsed = parse_llm_json(text)
 
     if not parsed:
         state["answer"] = "Failed to parse response from LLM."
+        graph_logger.error("Failed to parse LLM response.") # logging related
         return state
 
     state["answer"] = parsed

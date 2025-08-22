@@ -1,6 +1,7 @@
 from langchain_groq import ChatGroq
 import time
 import os
+import utility.config as config
 # Primary LLM
 llm_primary = ChatGroq(
     groq_api_key=os.environ.get("GROQ_API_KEY"),
@@ -14,8 +15,7 @@ llm_fallback = ChatGroq(
     temperature=0,
 )
 
-MAX_RETRIES = 2
-RETRY_DELAY = 1  
+
 
 
 def invoke_llm_with_fallback(prompt) -> str:
@@ -23,7 +23,7 @@ def invoke_llm_with_fallback(prompt) -> str:
     attempt = 0
     last_error = None
 
-    while attempt < MAX_RETRIES:
+    while attempt < config.MAX_RETRIES:
         try:
             result = llm_primary.invoke(prompt)
             if hasattr(result, "content") and result.content.strip():
@@ -31,7 +31,7 @@ def invoke_llm_with_fallback(prompt) -> str:
         except Exception as e:
             last_error = e
         attempt += 1
-        time.sleep(RETRY_DELAY)
+        time.sleep(config.RETRY_DELAY)
 
     try:
         print("[WARN] Primary LLM failed, using fallback...")
