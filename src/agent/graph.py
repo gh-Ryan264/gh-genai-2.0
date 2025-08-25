@@ -44,7 +44,7 @@ def orchestrator(state: AgentState) -> AgentState:
     text = invoke_llm(prompt)
     llm_time = (time.time() - start_time) * 1000
     graph_logger.debug(f"LLM response: {text}")# logging related
-    graph_logger.info(f"LLM classification took {llm_time:.2f} ms") # logging related
+    graph_logger.info(f"Query classification took {llm_time:.2f} ms") # logging related
     state["category"] = extract_category(text)
     graph_logger.debug(f"Identified category: {state['category']}")
     return state
@@ -59,7 +59,10 @@ def navigation_handler(state: AgentState) -> AgentState:
 
     state["query_embedding"] = query_embedding
     graph_logger.info("retrieving top documents for navigation...") # logging related
+    start_time = time.time()
     top_documents = get_top_k_documents(query_embedding, k=config.TOP_K)
+    retrieval_time = (time.time() - start_time) * 1000
+    graph_logger.info(f"Top-{config.TOP_K} documents retrieved in {retrieval_time:.2f} ms")
     graph_logger.debug(f"Top documents retrieved: {len(top_documents)}")# logging related
     
     if not top_documents:
@@ -73,6 +76,7 @@ def navigation_handler(state: AgentState) -> AgentState:
         query=state["query"]
     )
     graph_logger.debug(f"Generating response for query: {state['query']}")# logging
+    start_time = time.time()
     text = invoke_llm(prompt)
     llm_time = (time.time() - start_time) * 1000
     graph_logger.info(f"LLM response generated ... took {llm_time:.2f} ms") # logging related

@@ -2,7 +2,7 @@ import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
 import torch
 
-matryoshka_dim = 512
+matryoshka_dim = 256
 model = SentenceTransformer("nomic-ai/nomic-embed-text-v1.5", trust_remote_code=True)
 
 def embed_text(text: str, prefix: str) -> torch.Tensor:

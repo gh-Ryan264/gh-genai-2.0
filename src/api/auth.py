@@ -62,6 +62,8 @@ def load_jwks():
 
 def verify_token(credentials: HTTPAuthorizationCredentials):
     token = credentials.credentials
+    auth_logger.info("Verifying token...")
+    
     try:
         header = jwt.get_unverified_header(token)
         kid = header.get("kid")
