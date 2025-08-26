@@ -6,3 +6,5 @@ RETRY_DELAY = 1 #--> for llm retries
 JWKS_URL = "https://auth.guardhat.net:443/realms/962/protocol/openid-connect/certs"
 JWKS_REFRESH_INTERVAL = 1000 # seconds
 # LOCAL_KEY_PATH = Path("publickey.pem")
+
+INTENT_VECTORS_PATH ="intent_vectors.pkl"

@@ -34,3 +34,16 @@ Pick the best matching intent. Reply ONLY in JSON:
   "message": "success" or "failure"
 }}
 """)
+
+
+
+
+# def orchestrator(state: AgentState) -> AgentState:
+#     intent_vectors = load_intent_vectors()
+#     query_embedding = get_embedding_query(state["query"])
+#     state["query_embedding"] = query_embedding
+
+#     classification, confidence = classify_intent(query_embedding, intent_vectors)
+#     state["category"] = classification
+#     print(f"Identified category: {state['category']}")
+#     return state

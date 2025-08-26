@@ -13,7 +13,7 @@ from llm.llms import invoke_llm
 import utility.config as config
 from utility.logging import get_logger
 import time
-
+from agent.intent_definition import classify_intent, load_intent_vectors
 # Initialize logger
 graph_logger = get_logger("graph", "agent_graph.log")
 load_dotenv()
@@ -52,15 +52,14 @@ def orchestrator(state: AgentState) -> AgentState:
 
 def navigation_handler(state: AgentState) -> AgentState:
     start_time = time.time()
-    query_embedding = get_embedding_query(state["query"])
+    state["query_embedding"] = get_embedding_query(state["query"])
     embedding_time = (time.time() - start_time) * 1000
     graph_logger.debug(f"generated query embeddings for{state['query']}")# logging related
     graph_logger.info(f"Generated query embedding in {embedding_time:.2f} ms")
 
-    state["query_embedding"] = query_embedding
     graph_logger.info("retrieving top documents for navigation...") # logging related
     start_time = time.time()
-    top_documents = get_top_k_documents(query_embedding, k=config.TOP_K)
+    top_documents = get_top_k_documents(state["query_embedding"], k=config.TOP_K)
     retrieval_time = (time.time() - start_time) * 1000
     graph_logger.info(f"Top-{config.TOP_K} documents retrieved in {retrieval_time:.2f} ms")
     graph_logger.debug(f"Top documents retrieved: {len(top_documents)}")# logging related
@@ -136,7 +135,7 @@ app = graph.compile()
 
 if __name__ == "__main__":
     queries = [
-        "take me to worker event details page",
+        "navigate me to worker event details page",
         "I want to resolve an event take me to it.",
         "How do I add a new person to the system?",
         "I need to make changes to an existing product.",
