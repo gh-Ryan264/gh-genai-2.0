@@ -9,14 +9,14 @@ from api.logging_middleware import LoggingMiddleware
 from api.logging_middleware import request_logger
 
 app = FastAPI(lifespan=lifespan, dependencies=[Depends(require_auth)])
+
+# app = FastAPI()
 app.add_middleware(LoggingMiddleware)
-
-
 class RequestModel(BaseModel):
     query: str
     
 @app.post("/run-agent")
-async def run_agent(request: RequestModel, claims: dict = Depends(require_auth)):
+async def run_agent(request: RequestModel,claims: dict = Depends(require_auth)):
     initial_state = {
         "query": request.query,
         "category": "unknown",
